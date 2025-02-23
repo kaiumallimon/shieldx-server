@@ -54,3 +54,15 @@ User account data fetch
 # required Authorization:
 # Bearer ...authToken
 ```
+
+### .env structure
+```bash
+PORT = ???
+JWT_SECRET= ???
+JWT_REFRESH_SECRET = ???
+```
+
+
+## NOTE
+
+To run the project make sure to have a mentioned .env file and a firebase service account as `service_account.json` in the root directory of the project.
