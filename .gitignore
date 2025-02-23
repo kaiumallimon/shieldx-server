@@ -1,2 +1,8 @@
-#ignore .env
-.env
+# Ignore environment files  
+.env  
+
+# Ignore service account credentials  
+service_account.json  
+
+# Ignore dependency directories  
+node_modules/  
