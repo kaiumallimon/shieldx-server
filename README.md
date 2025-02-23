@@ -3,14 +3,54 @@
 
 ### Authentication Process:
 
-- User logs in → Client sends credentials to Node.js
+- User logs in with his email and password.
+- Email and password is sent to the server.
+- Server verifies email and password and generates two JWT token, one for authentication and one for refreshing the authentication if it expired.
+- Server sends the token to the clients
+- Client requests the user account data with the token it received. If the token is expired, then it calls the refresh api with the refresh token given. Then the server verifies and generates the auth token again and sends to the client & using the auth token, client gets the user account / all other data as required.
 
-- Node.js verifies credentials → Generates access & refresh tokens
 
-- Client stores tokens securely
 
-- Client uses access token to authenticate API requests
+### APIS
 
-- If access token expires, refresh token is used to get a new one
+Test the server:
+```bash
+/
+```
 
-- User logs out → Clears stored token
+Register an user:
+
+```bash
+/api/auth/register
+
+# required body:
+# {name, email, password}
+```
+
+Login an user (generate auth token):
+
+```bash
+/api/auth/login
+
+# required body:
+# {email, password}
+```
+
+Refresh auth token (only if token expired):
+```bash
+/api/auth/refresh
+
+# required body:
+# {refreshToken} => Received from login api call
+```
+
+User account data fetch
+```bash
+/api/profile/me
+
+# required body:
+# {email}
+
+# required Authorization:
+# Bearer ...authToken
+```
