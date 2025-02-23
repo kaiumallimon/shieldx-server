@@ -5,19 +5,16 @@ const authModel = require('./../models/auth.model');
 
 exports.register = async (data) => {
     try {
-        // Hash the password before storing
         const hashedPassword = await bcrypt.hash(data.password, 10);
 
-        // Prepare the user data
         const userData = {
             name: data.name,
             email: data.email,
             password: hashedPassword
         };
 
-        // Save user data to Firestore
-        const userId = Date.now().toString(); // Generate a unique userId
-        await authModel.createUser(userId, userData); // Save user to Firestore
+        const userId = Date.now().toString();
+        await authModel.createUser(userId, userData);
 
         return { status: 201, message: 'User registered successfully' };
     } catch (error) {
@@ -27,26 +24,26 @@ exports.register = async (data) => {
 };
 
 
-exports.login = async (data)=>{
+exports.login = async (data) => {
     const user = await authModel.getUserByEmail(data.email);
 
     console.log('user', user);
-    
-    if(!user) return {
+
+    if (!user) return {
         status: 404,
         message: 'User not found',
     };
 
     const isPasswordValid = await bcrypt.compare(data.password, user.password);
-    if(!isPasswordValid) return {
+    if (!isPasswordValid) return {
         status: 401,
         message: 'Invalid password',
     };
 
-    const token = jwt.sign({userId: user.userId}, process.env.JWT_SECRET);
+    const token = jwt.sign({ userId: user.userId }, process.env.JWT_SECRET);
     return {
         status: 200,
         message: 'Login successful',
-        data: {token},
+        data: { token },
     };
 };
