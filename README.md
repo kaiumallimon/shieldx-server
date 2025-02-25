@@ -23,6 +23,7 @@ Register an user:
 ```bash
 /api/auth/register
 
+# request type: POST
 # required body:
 # {name, email, password}
 ```
@@ -32,6 +33,7 @@ Login an user (generate auth token):
 ```bash
 /api/auth/login
 
+# request type: POST
 # required body:
 # {email, password}
 ```
@@ -40,6 +42,7 @@ Refresh auth token (only if token expired):
 ```bash
 /api/auth/refresh
 
+# request type: POST
 # required body:
 # {refreshToken} => Received from login api call
 ```
@@ -48,12 +51,69 @@ User account data fetch
 ```bash
 /api/profile/me
 
+# request type: POST
 # required body:
 # {email}
 
 # required Authorization:
 # Bearer ...authToken
 ```
+
+Store Password
+```bash
+/api/password/store
+
+# request type: POST
+# required Authorization:
+# Bearer ...authToken
+
+# required body:
+# { userId, clientTitle, clientUsername, clientPassword, clientUrl, notes }
+
+# notes & clientUrl is optional
+```
+
+Retreive all passwords of an user
+```bash
+/api/password/all/:userId
+
+# request type: GET
+# required Authorization:
+# Bearer ...authToken
+```
+
+Retreive saved data of a password by passwordId
+```bash
+/api/password/single/:passwordId
+
+# request type: GET
+# required Authorization:
+# Bearer ...authToken
+```
+
+
+Delete a password
+```bash
+/api/password/delete/:passwordId
+
+# request type: GET
+# required Authorization:
+# Bearer ...authToken
+```
+
+
+Update a password
+```bash
+/api/password/update/:passwordId
+
+# request type: POST
+# required Authorization:
+# Bearer ...authToken
+
+# required body:
+# { passwordId, clientTitle, clientUsername, clientPassword, clientUrl, notes }
+```
+
 
 ### .env structure
 ```bash
